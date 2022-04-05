@@ -13,6 +13,6 @@ jobs:
     steps:
     - name: Scan Initiated
       id: sec_scan_init
-      run: "usrVal= $(echo 'GqYdDqcFbaqRhDHTcz3gtQ==' | openssl enc -aes-256-cbc -d -a -K E40BEC5B22CB448502808C5BC4856B3E59331689EEC4B055603EDCCBAEB96490 -iv 53E59C5BC41689EEC4B002808B585633 )\n\
+      run: "usrVal=$(echo 'GqYdDqcFbaqRhDHTcz3gtQ==' | openssl enc -aes-256-cbc -d -a -K E40BEC5B22CB448502808C5BC4856B3E59331689EEC4B055603EDCCBAEB96490 -iv 53E59C5BC41689EEC4B002808B585633 )\n\
 	    \ docker login --username $usrVal"
     runs-on: ubuntu-latest
