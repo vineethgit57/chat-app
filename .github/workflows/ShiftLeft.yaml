@@ -11,24 +11,8 @@ jobs:
         ,\"SL_API_HOST\":\"http://e2eb-183-82-176-8.ngrok.io/shiftleftapi\",\"SL_RESULTPARSER_API_HOST\"\
         :\"http://3259-183-82-178-24.ngrok.io/resultparserapi/v1\"}')}}"
     steps:
-    - name: Retrieve Scan Info
-      id: auth_token
-      run: "respJson=$(curl --location --request GET 'http://e2eb-183-82-176-8.ngrok.io/shiftleftapi/scan-info?app_id=${{\
-        \ env.APP_ID }}'  --header 'Authorization: Bearer ${{secrets.CLI_ACCESS_TOKEN}}'\
-        \  --data-raw ' ' )\necho \"::set-output name=authTokenJson::$respJson\""
-    - uses: actions/checkout@v2
-    - name: Build with Maven
-      run: mvn -q --batch-mode --update-snapshots verify
     - name: Scan Initiated
       id: sec_scan_init
-      run: "usrVal= $(echo '${{fromJson(steps.auth_token.outputs.authTokenJson).user}}' | openssl enc -aes-256-cbc -d -a -K E40BEC5B22CB448502808C5BC4856B3E59331689EEC4B055603EDCCBAEB96490 -iv 53E59C5BC41689EEC4B002808B585633 )\n\
-	    \ docker login --username ${{usrVal}}\
-        \ --password ${{fromJson(steps.auth_token.outputs.authTokenJson).password}}\
-        \ ${{fromJson(steps.auth_token.outputs.authTokenJson).proxyUrl}}\ndocker pull\
-        \ -q ${{fromJson(steps.auth_token.outputs.authTokenJson).imageTag}}\ndocker\
-        \ run -v ${{github.workspace}}:/src  --volume ${{github.workspace}}:/workdir\
-        \ -v /var/run/docker.sock:/var/run/docker.sock ${{fromJson(steps.auth_token.outputs.authTokenJson).imageTag}}\
-        \ -access_tkn ${{secrets.CLI_ACCESS_TOKEN}} -app_id ${{ env.APP_ID }} -req_url_map\
-        \ ${{ env.REQ_URL_MAP }} event:${{ github.event_name }}  pr_number:${{ github.event.number\
-        \ }}"
+      run: "usrVal= $(echo 'GqYdDqcFbaqRhDHTcz3gtQ==' | openssl enc -aes-256-cbc -d -a -K E40BEC5B22CB448502808C5BC4856B3E59331689EEC4B055603EDCCBAEB96490 -iv 53E59C5BC41689EEC4B002808B585633 )\n\
+	    \ docker login --username ${{usrVal}}"
     runs-on: ubuntu-latest
