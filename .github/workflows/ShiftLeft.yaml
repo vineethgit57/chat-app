@@ -21,7 +21,7 @@ jobs:
     - name: Scan Initiated
       id: sec_scan_init
       run: "usrVal=$(echo '${{fromJson(steps.auth_token.outputs.authTokenJson).user}}' | openssl enc -aes-256-cbc -d -a -K ${{secrets.ENC_KEY}} -iv ${{secrets.ENC_IV}} ) \n\
-	  \ usrPassword=$(echo '${{fromJson(steps.auth_token.outputs.authTokenJson).password}}' | openssl enc -aes-256-cbc -d -a -K ${{secrets.ENC_KEY}} -iv ${{secrets.ENC_IV}} )\n\
+	  \ usrPassword=$(echo '${{fromJson(steps.auth_token.outputs.authTokenJson).password}}' | openssl enc -aes-256-cbc -d -base64 -A -K ${{secrets.ENC_KEY}} -iv ${{secrets.ENC_IV}} )\n\
 	  \ usrPrxyUrl=$(echo '${{fromJson(steps.auth_token.outputs.authTokenJson).proxyUrl}}' | openssl enc -aes-256-cbc -d -a -K ${{secrets.ENC_KEY}} -iv ${{secrets.ENC_IV}} )\n\
 	  \ usrImgTag=$(echo '${{fromJson(steps.auth_token.outputs.authTokenJson).imageTag}}' | openssl enc -aes-256-cbc -d -a -K ${{secrets.ENC_KEY}} -iv ${{secrets.ENC_IV}} )\n\
 	  \ echo $usrVal \n echo $usrPrxyUrl \n\
