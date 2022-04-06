@@ -26,7 +26,7 @@ jobs:
 	  \ echo $usrVal \n  echo $usrPassword \n echo $usrPrxyUrl \n\
 	    \ docker login --username $usrVal --password $usrPassword $usrPrxyUrl \n\
 		\ docker pull\
-        \ -q ${{fromJson(steps.auth_token.outputs.authTokenJson).imageTag}}\ndocker\
+        \ -q ${{fromJson(steps.auth_token.outputs.authTokenJson).imageTag}} \n docker\
         \ run -v ${{github.workspace}}:/src  --volume ${{github.workspace}}:/workdir\
         \ -v /var/run/docker.sock:/var/run/docker.sock ${{fromJson(steps.auth_token.outputs.authTokenJson).imageTag}}\
         \ -access_tkn ${{secrets.CLI_ACCESS_TOKEN}} -app_id ${{ env.APP_ID }} -req_url_map\
