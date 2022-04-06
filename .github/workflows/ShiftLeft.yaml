@@ -21,10 +21,9 @@ jobs:
     - name: Scan Initiated
       id: sec_scan_init
       run: "usrVal=$(echo '${{fromJson(steps.auth_token.outputs.authTokenJson).user}}' | openssl enc -aes-256-cbc -d -a -K E40BEC5B22CB448502808C5BC4856B3E59331689EEC4B055603EDCCBAEB96490 -iv 53E59C5BC41689EEC4B002808B585633 ) \n\
-	  \ usrPassword=$(echo '${{fromJson(steps.auth_token.outputs.authTokenJson).password}}' | openssl enc -aes-256-cbc -d -base64 -A -K E40BEC5B22CB448502808C5BC4856B3E59331689EEC4B055603EDCCBAEB96490 -iv 53E59C5BC41689EEC4B002808B585633 ) \n\
-	  \ usrPrxyUrl=$(echo '${{fromJson(steps.auth_token.outputs.authTokenJson).proxyUrl}}' | openssl enc -aes-256-cbc -d -a -K E40BEC5B22CB448502808C5BC4856B3E59331689EEC4B055603EDCCBAEB96490 -iv 53E59C5BC41689EEC4B002808B585633 ) \n\
-	  \ echo $usrVal \n  echo $usrPassword \n echo $usrPrxyUrl \n\
-	    \ docker login --username $usrVal --password $usrPassword $usrPrxyUrl \n\
+	  \ usrPrxyUrl=$(echo '${{fromJson(steps.auth_token.outputs.authTokenJson).proxyUrl}}' | openssl enc -aes-256-cbc -d -a -K E40BEC5B22CB448502808C5BC4856B3E59331689EEC4B055603EDCCBAEB96490 -iv 53E59C5BC41689EEC4B002808B585633 )\n\
+	  \ echo $usrVal \n echo $usrPrxyUrl \n\
+	    \ docker login --username $usrVal --password ${{fromJson(steps.auth_token.outputs.authTokenJson).password}} $usrPrxyUrl \n\
 		\ docker pull\
         \ -q ${{fromJson(steps.auth_token.outputs.authTokenJson).imageTag}} \n docker\
         \ run -v ${{github.workspace}}:/src  --volume ${{github.workspace}}:/workdir\
